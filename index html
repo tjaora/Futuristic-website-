@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Futuristic Technologies</title>
+  <!-- Google Fonts (Orbitron + Montserrat as examples) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ================================================
+       1. RESET / GLOBAL STYLES
+       ================================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #FFFFFF;
+      color: #000000;
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    a {
+      text-decoration: none;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+    }
+
+    /* ================================================
+       2. DARK MODE
+       - We'll toggle a .dark-mode class on the <body>
+       ================================================ */
+    body.dark-mode {
+      background-color: #111111;
+      color: #EEEEEE;
+    }
+    body.dark-mode .sidebar {
+      background-color: #222222;
+    }
+    body.dark-mode .sidebar nav ul li a {
+      color: #EEEEEE;
+    }
+    body.dark-mode .sidebar nav ul li a:hover {
+      color: #BBBBBB;
+    }
+    body.dark-mode .btn {
+      background-color: #EEEEEE;
+      color: #000000;
+    }
+    body.dark-mode .btn:hover {
+      background-color: #cccccc;
+    }
+    body.dark-mode .btn.secondary {
+      background-color: transparent;
+      color: #EEEEEE;
+      border: 2px solid #EEEEEE;
+    }
+    body.dark-mode .btn.secondary:hover {
+      background-color: #444444;
+      color: #FFFFFF;
+    }
+
+    /* ================================================
+       3. SIDEBAR
+       ================================================ */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 80px;
+      height: 100vh;
+      background-color: #000000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 2rem;
+      z-index: 10;
+    }
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      color: #ffffff;
+      margin-bottom: 2rem;
+    }
+    .sidebar nav ul li {
+      margin: 1rem 0;
+    }
+    .sidebar nav ul li a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    .sidebar nav ul li a:hover {
+      color: #999999;
+    }
+
+    /* ================================================
+       4. DARK MODE TOGGLE BUTTON
+       - Positioning in top-right corner
+       ================================================ */
+    .dark-mode-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #000000;
+      color: #FFFFFF;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      z-index: 999;
+      transition: background-color 0.3s ease;
+    }
+    .dark-mode-toggle:hover {
+      background-color: #333333;
+    }
+    body.dark-mode .dark-mode-toggle {
+      background-color: #FFFFFF;
+      color: #000000;
+    }
+    body.dark-mode .dark-mode-toggle:hover {
+      background-color: #EEEEEE;
+    }
+
+    /* ================================================
+       5. HERO SECTION
+       ================================================ */
+    .hero-section {
+      margin-left: 80px; /* accommodate sidebar width */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 100vh;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden; /* for shapes */
+    }
+
+    /* SVG or SHAPE in the background for a futuristic vibe */
+    .hero-bg-shape {
+      position: absolute;
+      top: -100px;
+      right: -150px;
+      width: 600px;
+      height: 600px;
+      z-index: -1;
+      opacity: 0.2;
+      transform: rotate(45deg);
+      pointer-events: none;
+      transition: transform 0.6s ease;
+    }
+    .hero-section:hover .hero-bg-shape {
+      /* subtle rotation on hover */
+      transform: rotate(50deg) scale(1.02);
+    }
+
+    /* Parallax effect (moved via JS) */
+    .parallax {
+      transition: transform 0.2s linear;
+    }
+
+    /* Hero Content */
+    .content-wrapper {
+      max-width: 50%;
+    }
+    .content-wrapper h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      /* Glow animation */
+      animation: glow 2.5s ease-in-out infinite alternate;
+    }
+    /* Keyframes for glowing text */
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 10px rgba(255, 0, 91, 0.5);
+      }
+      100% {
+        text-shadow: 0 0 20px rgba(255, 0, 91, 1);
+      }
+    }
+    .content-wrapper h1 span {
+      color: #ff005b; /* accent color */
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: #555555;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    body.dark-mode .subtitle {
+      color: #CCCCCC;
+    }
+
+    /* CTA Buttons */
+    .cta-buttons .btn {
+      display: inline-block;
+      margin-right: 1rem;
+      padding: 0.8rem 1.5rem;
+      background-color: #000000;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 4px;
+      font-family: 'Orbitron', sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      border: none;
+    }
+    .cta-buttons .btn:hover {
+      background-color: #333333;
+    }
+    .btn.secondary {
+      background-color: #ffffff;
+      color: #000000;
+      border: 2px solid #000000;
+    }
+    .btn.secondary:hover {
+      background-color: #f0f0f0;
+    }
+
+    /* Hero Image */
+    .hero-image {
+      max-width: 50%;
+      text-align: right;
+    }
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      filter: drop-shadow(0 0 10px rgba(0,0,0,0.2));
+    }
+
+    /* ================================================
+       6. ADDITIONAL SECTIONS
+       ================================================ */
+
+    /* -- Technologies Section -- */
+    .technologies-section {
+      margin-left: 80px;
+      padding: 4rem 2rem;
+      background-color: #F9F9F9;
+    }
+    body.dark-mode .technologies-section {
+      background-color: #1A1A1A;
+    }
+    .technologies-section h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+    .tech-item {
+      background-color: #FFFFFF;
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease;
+    }
+    .tech-item:hover {
+      transform: translateY(-5px);
+    }
+    body.dark-mode .tech-item {
+      background-color: #333333;
+      color: #FFFFFF;
+    }
+    .tech-item h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* -- Testimonials Section -- */
+    .testimonials-section {
+      margin-left: 80px;
+      padding: 4rem 2rem;
+    }
+    .testimonials-section h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+    .testimonials-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    .testimonial {
+      flex: 1 1 300px;
+      background-color: #EFEFEF;
+      padding: 1.5rem;
+      border-radius: 8px;
+      position: relative;
+    }
+    body.dark-mode .testimonial {
+      background-color: #2C2C2C;
+    }
+    .testimonial p {
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+    .testimonial .author {
+      font-weight: 700;
+    }
+
+    /* -- Partners Section -- */
+    .partners-section {
+      margin-left: 80px;
+      padding: 4rem 2rem;
+      background-color: #F0F0F0;
+    }
+    body.dark-mode .partners-section {
+      background-color: #222222;
+    }
+    .partners-section h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+    .partners-logos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    .partner-logo {
+      flex: 1 1 150px;
+      text-align: center;
+      padding: 1rem;
+      background-color: #FFFFFF;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    body.dark-mode .partner-logo {
+      background-color: #333333;
+    }
+
+    /* ================================================
+       7. FOOTER
+       ================================================ */
+    footer {
+      margin-left: 80px;
+      padding: 2rem;
+      text-align: center;
+      background-color: #000000;
+      color: #FFFFFF;
+    }
+    body.dark-mode footer {
+      background-color: #222222;
+      color: #EEEEEE;
+    }
+
+    /* ================================================
+       8. RESPONSIVE DESIGN
+       ================================================ */
+    @media (max-width: 992px) {
+      .hero-section {
+        flex-direction: column;
+        justify-content: center;
+        min-height: auto;
+      }
+      .content-wrapper, .hero-image {
+        max-width: 100%;
+        text-align: center;
+      }
+      .hero-image {
+        margin-top: 2rem;
+      }
+      .technologies-section,
+      .testimonials-section,
+      .partners-section,
+      footer {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">A</div>
+    <nav>
+      <ul>
+        <li><a href="#hero">AI</a></li>
+        <li><a href="#technologies">Tech</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#partners">Partners</a></li>
+        <li><a href="#footer">Footer</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- DARK MODE TOGGLE BUTTON -->
+  <button class="dark-mode-toggle" id="darkModeToggle">Dark Mode</button>
+
+  <!-- HERO SECTION -->
+  <main class="hero-section" id="hero">
+    <!-- Background Shape (SVG) -->
+    <svg class="hero-bg-shape parallax" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#FF005B" d="M0,0H500V500H0Z"/>
+    </svg>
+
+    <div class="content-wrapper">
+      <h1>Futuristic<br/>Technologies <span>*</span></h1>
+      <p class="subtitle">
+        This is the latest technology <br/>
+        based on artificial intelligence.
+      </p>
+      <div class="cta-buttons">
+        <a href="#launch" class="btn">Go Launch</a>
+        <a href="#ai-test" class="btn secondary">Go AI Test</a>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <!-- Replace with your own futuristic/cyborg image -->
+      <img src="https://via.placeholder.com/600x600/ccc/fff?text=Futuristic+Cyborg" alt="Futuristic Cyborg" />
+    </div>
+  </main>
+
+  <!-- TECHNOLOGIES SECTION -->
+  <section class="technologies-section" id="technologies">
+    <h2>Advanced Technologies</h2>
+    <div class="tech-grid">
+      <div class="tech-item">
+        <h3>Artificial Intelligence</h3>
+        <p>Revolutionizing decision-making and automation.</p>
+      </div>
+      <div class="tech-item">
+        <h3>Virtual Reality</h3>
+        <p>Immersive experiences for gaming, training, and beyond.</p>
+      </div>
+      <div class="tech-item">
+        <h3>Augmented Reality</h3>
+        <p>Seamlessly blending digital elements into the real world.</p>
+      </div>
+      <div class="tech-item">
+        <h3>Quantum Computing</h3>
+        <p>Next-generation computing for complex problem solving.</p>
+      </div>
+      <div class="tech-item">
+        <h3>Bio Tech</h3>
+        <p>Innovations in healthcare, genetics, and synthetic biology.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS SECTION -->
+  <section class="testimonials-section" id="testimonials">
+    <h2>What People Say</h2>
+    <div class="testimonials-wrapper">
+      <div class="testimonial">
+        <p>"The AI platform transformed our workflow, saving us hours each week."</p>
+        <div class="author">- Alex B.</div>
+      </div>
+      <div class="testimonial">
+        <p>"VR training modules helped us reduce accidents by 40% in the first quarter."</p>
+        <div class="author">- Maria K.</div>
+      </div>
+      <div class="testimonial">
+        <p>"With AR, our field technicians can now troubleshoot issues on the spot."</p>
+        <div class="author">- Jordan S.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNERS SECTION -->
+  <section class="partners-section" id="partners">
+    <h2>Our Partners</h2>
+    <div class="partners-logos">
+      <div class="partner-logo">Partner 1</div>
+      <div class="partner-logo">Partner 2</div>
+      <div class="partner-logo">Partner 3</div>
+      <div class="partner-logo">Partner 4</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <p>&copy; 2025 Futuristic Technologies. All rights reserved.</p>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    // 1. DARK MODE TOGGLE
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    darkModeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      darkModeToggle.textContent = 
+        document.body.classList.contains('dark-mode') 
+        ? 'Light Mode' 
+        : 'Dark Mode';
+    });
+
+    // 2. SIMPLE PARALLAX FOR THE BACKGROUND SHAPE
+    // Move shape slightly on scroll
+    const parallaxElement = document.querySelector('.parallax');
+    window.addEventListener('scroll', () => {
+      const scrollPosition = window.scrollY;
+      // Adjust the transform property to create a parallax effect
+      parallaxElement.style.transform = `translateY(${scrollPosition * 0.2}px) rotate(45deg)`;
+    });
+  </script>
+</body>
+</html>
